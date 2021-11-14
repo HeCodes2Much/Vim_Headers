@@ -54,5 +54,5 @@ func! TRC_HeadUp(action)
     endif
 endfunc
 
-noremap <silent> <leader>hp :call TRC_HeadUp('place')<CR>
-noremap <silent> <leader>hu :call TRC_HeadUp('update')<CR>
+noremap <silent> <leader>trchp :call TRC_HeadUp('place')<CR>
+noremap <silent> <leader>trchu :call TRC_HeadUp('update')<CR>

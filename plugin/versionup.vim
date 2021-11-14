@@ -63,5 +63,5 @@ func! TRC_VersionUp(action)
 	endif
 endfunc
 
-noremap <silent> <leader>vp :call TRC_VersionUp('place')<CR>
-noremap <silent> <leader>vu :call TRC_VersionUp('update')<CR>
+noremap <silent> <leader>trcvp :call TRC_VersionUp('place')<CR>
+noremap <silent> <leader>trcvu :call TRC_VersionUp('update')<CR>
