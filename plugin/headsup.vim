@@ -3,7 +3,7 @@
 " GitHub        - https://github.com/The-Repo-Club/
 " Author        - The-Repo-Club [wayne6324@gmail.com]
 " Start On      - Sun 31 October 2021, 00:17:35 GMT
-" Modified On   - Mon 24 January 2022, 04:53:33 GMT
+" Modified On   - Mon 24 January 2022, 05:08:25 GMT
 "------------------------------------------------------------------------------
 
 " Add and update header and its timestamp, including instances of `CurVer=''`
@@ -29,25 +29,12 @@ func! TRC_HeadUp(action)
             exe "silent normal! i# Path         - /usr/bin/\<Esc>\"_\"=expand('%:t')\<CR>po"
             exe "silent normal! i# GitHub       - https://github.com/The-Repo-Club/\<CR>"
             exe "silent normal! i# Author       - The-Repo-Club [wayne6324@gmail.com]\<CR>"
-            exe "silent normal! i# Start On     - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>po"
-            exe "silent normal! i# Modified On  - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>po"
+            exe "silent normal! i# Start On     - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %P (%Z) \")\<CR>po"
+            exe "silent normal! i# Modified On  - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %P (%Z) \")\<CR>po"
             exe "silent normal! i#\<Esc>78a-\<Esc>o"
         elseif (a:action == 'update')
             if (search("^[#/\"]* Modified On\\s*- ", 'ep') > 0)
                 exe "silent normal! ld$\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>p"
-                if (search('^_VERSION_="', 'ep') > 0)
-                    " Shell syntax support. (pre: 2019-11-29)
-                    exe "silent normal! di\"\"=strftime(\"%F\")\<CR>P"
-                elseif (search("^CurVer='", 'ep') > 0)
-                    " Alternative shell syntax support. (post: 2019-11-29)
-                    exe "silent normal! di'\"=strftime(\"%F\")\<CR>P"
-                elseif (search('^my $CurVer = "', 'ep') > 0)
-                    " Perl syntax support.
-                    exe "silent normal! di\"\"=strftime(\"%F\")\<CR>P"
-                elseif (search("^my $CurVer = '", 'ep') > 0)
-                    " Alternative Perl syntax support. (post: 2020-02-02)
-                    exe "silent normal! di'\"=strftime('%F')\<CR>P"
-                endif
             endif
         endif
 

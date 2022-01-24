@@ -2,8 +2,8 @@
 " Path         - .config/nvim/plugin/versionup.vim
 " GitHub       - https://github.com/The-Repo-Club/
 " Author       - The-Repo-Club [wayne6324@gmail.com]
-" Start On     - Mon 1 Nov 20:23:12 GMT 2021
-" Modified On  - Mon 1 Nov 20:23:12 GMT 2021
+" Start On     - Mon 1 November 2021, 20:23:12 GMT
+" Modified On  - Mon 24 January 2022, 05:08:45 GMT
 "------------------------------------------------------------------------------
 "
 " Add and update header and its timestamp, including instances of `CurVer=''`
