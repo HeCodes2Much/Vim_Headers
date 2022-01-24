@@ -17,16 +17,16 @@
 " aforementioned variable's value, if it's found at the very start of a line.
 "------------------------------------------------------------------------------
 
-Version=2022.01.24
+" Version=2022.01.24
 
 func! TRC_VersionUp(action)
 	if (exists("*strftime") == 1)
 		exe 'silent normal! mc'
 
 		if (a:action == "place")
-			exe "silent normal! iVersion=\<Esc>\"_\"=strftime(\"%Y.%m.%d\")\<CR>po"
+			exe "silent normal! i# Version=\<Esc>\"_\"=strftime(\"%Y.%m.%d\")\<CR>po"
 		elseif (a:action == 'update')
-			if (search("^Version\\s*=", 'ep') > 0)
+			if (search("^# Version\\s*=", 'ep') > 0)
 				exe "silent normal! ld$\"_\"=strftime(\"%Y.%m.%d\")\<CR>p"
 				if (search('^_VERSION_="', 'ep') > 0)
 					" Shell syntax support. (pre: 2019-11-29)
@@ -41,7 +41,7 @@ func! TRC_VersionUp(action)
 					" Alternative Perl syntax support. (post: 2020-02-02)
 					exe "silent normal! di'\"=strftime('%F')\<CR>P"
 				endif
-            elseif (search("^version\\s*=", 'ep') > 0)
+            elseif (search("^# version\\s*=", 'ep') > 0)
 				exe "silent normal! ld$\"_\"=strftime(\"%Y.%m.%d\")\<CR>p"
 				if (search('^_VERSION_="', 'ep') > 0)
 					" Shell syntax support. (pre: 2019-11-29)

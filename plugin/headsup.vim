@@ -2,8 +2,8 @@
 " Path          - .config/nvim/plugin/headsup.vim
 " GitHub        - https://github.com/The-Repo-Club/
 " Author        - The-Repo-Club [wayne6324@gmail.com]
-" Start On      - Sun 31 Oct 00:17:35 BST 2021
-" Modified On   - Sun 31 Oct 00:17:35 BST 2021
+" Start On      - Sun 31 October 2021, 00:17:35 GMT
+" Modified On   - Mon 24 January 2022, 04:53:33 GMT
 "------------------------------------------------------------------------------
 
 " Add and update header and its timestamp, including instances of `CurVer=''`
@@ -17,7 +17,8 @@
 " aforementioned variable's value, if it's found at the very start of a line.
 "------------------------------------------------------------------------------
 
-Version=2022.01.24
+" Version=2022.01.24
+"
 
 func! TRC_HeadUp(action)
     if (exists("*strftime") == 1)
@@ -30,7 +31,7 @@ func! TRC_HeadUp(action)
             exe "silent normal! i# Author       - The-Repo-Club [wayne6324@gmail.com]\<CR>"
             exe "silent normal! i# Start On     - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>po"
             exe "silent normal! i# Modified On  - \<Esc>\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>po"
-            exe "silent normal! i#\<Esc>78a-\<Esc>0o"
+            exe "silent normal! i#\<Esc>78a-\<Esc>o"
         elseif (a:action == 'update')
             if (search("^[#/\"]* Modified On\\s*- ", 'ep') > 0)
                 exe "silent normal! ld$\"_\"=strftime(\"%a %d %B %Y, %I:%M:%S %Z \")\<CR>p"
