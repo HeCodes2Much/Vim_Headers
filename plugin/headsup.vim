@@ -26,7 +26,7 @@ func! TRC_HeadUp(action)
             exe "silent normal! i# Path         - /usr/bin/\<Esc>\"_\"=expand('%:t')\<CR>po"
             exe "silent normal! i# GitHub       - https://github.com/The-Repo-Club/\<CR>"
             exe "silent normal! i# Author       - The-Repo-Club [wayne6324@gmail.com]\<CR>"
-            exe "silent normal! i# Start On     - \<Esc>\"_\"=strftime(\"%a %d %b %T %Z %Y\")\<CR>po"
+            exe "silent normal! i# Start On     - \<Esc>\"_\"=strftime(\"%a %d %b %Y, %T %Z \")\<CR>po"
             exe "silent normal! i# Modified On  - \<Esc>\"_\"=strftime(\"%a %d %b %T %Z %Y\")\<CR>po"
             exe "silent normal! i#\<Esc>78a-\<Esc>0o"
         elseif (a:action == 'update')
