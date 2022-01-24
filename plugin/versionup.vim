@@ -17,6 +17,8 @@
 " aforementioned variable's value, if it's found at the very start of a line.
 "------------------------------------------------------------------------------
 
+Version=2022.01.24
+
 func! TRC_VersionUp(action)
 	if (exists("*strftime") == 1)
 		exe 'silent normal! mc'
