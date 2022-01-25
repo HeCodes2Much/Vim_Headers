@@ -34,13 +34,25 @@ func! <SID>GetFile()
 endfunc
 
 func! <SID>GetGithub()
-    let github = "https://github.com/The-Repo-Club/"
+    if exists('g:header_github')
+        let github = "https://github.com/".g:header_github."/"
+    else
+        let usergithubname = "https://github.com/Example/"
+    endif
     return "GitHub        - ".github
 endfunc
 
 func! <SID>GetAuthor()
-    let username = "The-Repo-Club"
-    let email = "wayne6324@gmail.com"
+    if exists('g:header_username')
+        let username = g:header_username
+    else
+        let username = "Example"
+    endif
+    if exists('g:header_email')
+        let email = g:header_email
+    else
+        let email = "example@gmail.com"
+    endif
     let author = username." [".email."]"
     return "Author        - ".author
 endfunc
