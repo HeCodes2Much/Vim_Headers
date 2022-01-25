@@ -6,15 +6,13 @@
 " Modified On   - Mon 24 January 2022, 05:12:44 pm (GMT)
 "------------------------------------------------------------------------------
 
-" Add and update header and its timestamp, including instances of `CurVer=''`
-" or `_VERSION_=""` variable (assignment) datestamp in shell scripts, if this
-" variable is found. Also cleans up spacing. Does not save; that's up to you.
+" Add and update header and its timestamp, including instances of `Version=''`
+"  variable (assignment) datestamp in shell scripts, if thisvariable is found.
+"  Also cleans up spacing. Does not save; that's up to you.
 "
-" For now, you'll have to change header information (E-Mail and GitHub entries)
-" to match your own; it'll hopefully be more user-friendly in the future.
-"
-" To use, enter <leader>hp to place it, and <leader>hu to update it & the
+" To use, enter <leader>trchp to place it, and <leader>trchu to update it & the
 " aforementioned variable's value, if it's found at the very start of a line.
+" To update the version run <leader>trcvp
 "------------------------------------------------------------------------------
 
 " Version=2022.01.24
@@ -73,10 +71,21 @@ endfunc
 func! TRC_HeadUp(action)
     if (exists("*strftime") == 1)
         exe 'silent normal! mc'
+        let b:filetype = &ft
 
         if (a:action == "place")
-            if &filetype == 'sh'
-                call setline(1, "\#!/usr/bin/env bash")
+            if b:filetype == 'sh' ||
+                \ b:filetype == 'fish' ||
+                \ b:filetype == 'perl' ||
+                \ b:filetype == 'python' ||
+                \ b:filetype == "ruby" ||
+                \ b:filetype == 'zsh'
+                " ---------------------------------------------------------
+                if exists('g:header_sh') && b:filetype == 'sh'
+                    call setline(1, "\#!/usr/bin/env ".g:header_sh)
+                else
+                    call setline(1, "\#!/usr/bin/env ".b:filetype)
+                endif
                 call append(1, "\# -*-coding:utf-8 -*-")
                 call append(2, "\# ".<SID>GetHeaderLine())
                 call append(3, "\# ".<SID>GetFile())
@@ -88,6 +97,94 @@ func! TRC_HeadUp(action)
                 call append(9, "\# ".<SID>GetVersion())
                 call append(10, "\# ".<SID>GetHeaderLine())
                 call append(11, "")
+                " ---------------------------------------------------------
+            elseif b:filetype == "elixir" ||
+                \ b:filetype == "make" ||
+                \ b:filetype == "tmux" ||
+                \ b:filetype == "yaml"
+                call setline(1, "\# ".<SID>GetHeaderLine())
+                call append(1, "\# ".<SID>GetFile())
+                call append(2, "\# ".<SID>GetGithub())
+                call append(3, "\# ".<SID>GetAuthor())
+                call append(4, "\# ".<SID>GetStart())
+                call append(5, "\# ".<SID>GetModified())
+                call append(6, "\# ".<SID>GetHeaderLine())
+                call append(7, "\# ".<SID>GetVersion())
+                call append(8, "\# ".<SID>GetHeaderLine())
+                call append(9, "")
+            elseif b:filetype == 'haskell' ||
+                \ b:filetype == 'lua'
+                call setline(1, "\-- ".<SID>GetHeaderLine())
+                call append(1, "\-- ".<SID>GetFile())
+                call append(2, "\-- ".<SID>GetGithub())
+                call append(3, "\-- ".<SID>GetAuthor())
+                call append(4, "\-- ".<SID>GetStart())
+                call append(5, "\-- ".<SID>GetModified())
+                call append(6, "\-- ".<SID>GetHeaderLine())
+                call append(7, "\-- ".<SID>GetVersion())
+                call append(8, "\-- ".<SID>GetHeaderLine())
+                call append(9, "")
+            elseif b:filetype == 'markdown' ||
+                \ b:filetype == 'markdown' ||
+                \ b:filetype == 'html'
+                call setline(1, "\<!-- ".<SID>GetHeaderLine()."")
+                call append(1, "\<!-- ".<SID>GetFile()."")
+                call append(2, "\<!-- ".<SID>GetGithub()."")
+                call append(3, "\<!-- ".<SID>GetAuthor()."")
+                call append(4, "\<!-- ".<SID>GetStart()."")
+                call append(5, "\<!-- ".<SID>GetModified()."")
+                call append(6, "\<!-- ".<SID>GetHeaderLine()."")
+                call append(7, "\<!-- ".<SID>GetVersion()."")
+                call append(8, "\<!-- ".<SID>GetHeaderLine()."")
+                call append(9, "-->")
+                call append(10, "")
+            elseif b:filetype == 'vim'
+                call setline(1, "\" ".<SID>GetHeaderLine())
+                call append(1, "\" ".<SID>GetFile())
+                call append(2, "\" ".<SID>GetGithub())
+                call append(3, "\" ".<SID>GetAuthor())
+                call append(4, "\" ".<SID>GetStart())
+                call append(5, "\" ".<SID>GetModified())
+                call append(6, "\" ".<SID>GetHeaderLine())
+                call append(7, "\" ".<SID>GetVersion())
+                call append(8, "\" ".<SID>GetHeaderLine())
+                call append(9, "")
+            elseif b:filetype == 'arduino' ||
+                \ b:filetype == 'c' ||
+                \ b:filetype == 'cpp' ||
+                \ b:filetype == 'css' ||
+                \ b:filetype == 'cf' ||
+                \ b:filetype == 'groovy' ||
+                \ b:filetype == 'java' ||
+                \ b:filetype == 'kotlin' ||
+                \ b:filetype == 'scala' ||
+                \ b:filetype == 'javascript' ||
+                \ b:filetype == 'javascript.jsx' ||
+                \ b:filetype == 'javascriptreact' ||
+                \ b:filetype == 'typescript' ||
+                \ b:filetype == 'typescriptreact' ||
+                \ b:filetype == 'less' ||
+                \ b:filetype == 'php' ||
+                \ b:filetype == 'go' ||
+                \ b:filetype == 'sass' ||
+                \ b:filetype == 'rust' ||
+                \ b:filetype == 'systemverilog' ||
+                \ b:filetype == 'verilog' ||
+                \ b:filetype == 'lex' ||
+                \ b:filetype == 'yacc'
+                call setline(1, "\/** ".<SID>GetHeaderLine())
+                call append(1, "\/** ".<SID>GetFile())
+                call append(2, "\/** ".<SID>GetGithub())
+                call append(3, "\/** ".<SID>GetAuthor())
+                call append(4, "\/** ".<SID>GetStart())
+                call append(5, "\/** ".<SID>GetModified())
+                call append(6, "\/** ".<SID>GetHeaderLine())
+                call append(7, "\/** ".<SID>GetVersion())
+                call append(8, "\/** ".<SID>GetHeaderLine())
+                call append(9, "**/")
+                call append(10, "")
+            else
+                call setline(1, "\#!/usr/bin/env ".b:filetype)
             endif
         elseif (a:action == 'update')
             if (search("^[#/\"]* Modified On\\s*- ", 'ep') > 0)
@@ -105,7 +202,7 @@ func! TRC_VersionUp(action)
 	if (exists("*strftime") == 1)
         if (a:action == 'update')
             if &filetype == 'sh'
-                if (search("^# Version\\s*=", 'ep') > 0)
+                if (search("^* Version\\s*=", 'ep') > 0)
                     exe "silent normal! ld$\"_\"=strftime(\"%Y.%m.%d\")\<CR>p"
                 endif
             endif
