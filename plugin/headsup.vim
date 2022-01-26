@@ -1,11 +1,13 @@
+
 "------------------------------------------------------------------------------
 " Path          - .config/nvim/plugin/headsup.vim
 " GitHub        - https://github.com/The-Repo-Club/
 " Author        - The-Repo-Club [wayne6324@gmail.com]
 " Start On      - Sun 31 October 2021, 01:17:35 am (GMT)
-" Modified On   - Mon 24 January 2022, 05:12:44 pm (GMT)
+" Modified On   - Sat 29 January 2022, 06:25:00 pm (GMT) 
 "------------------------------------------------------------------------------
-
+" Version=2022.01.28
+"------------------------------------------------------------------------------
 " Add and update header and its timestamp, including instances of `Version=''`
 "  variable (assignment) datestamp in shell scripts, if thisvariable is found.
 "  Also cleans up spacing. Does not save; that's up to you.
@@ -14,9 +16,8 @@
 " aforementioned variable's value, if it's found at the very start of a line.
 " To update the version run <leader>trcvp
 "------------------------------------------------------------------------------
-
-" Version=2022.01.24
 "
+
 func! <SID>GetDate()
     return strftime("%a %d %B %Y, %I:%M:%S %P (%Z)")
 endfunc
@@ -94,7 +95,7 @@ func! TRC_HeadUp(action)
                 call append(6, "\# ".<SID>GetStart())
                 call append(7, "\# ".<SID>GetModified())
                 call append(8, "\# ".<SID>GetHeaderLine())
-                call append(9, "\# ".<SID>GetVersion())
+                call append(9, <SID>GetVersion())
                 call append(10, "\# ".<SID>GetHeaderLine())
                 call append(11, "")
                 " ---------------------------------------------------------
@@ -109,7 +110,7 @@ func! TRC_HeadUp(action)
                 call append(4, "\# ".<SID>GetStart())
                 call append(5, "\# ".<SID>GetModified())
                 call append(6, "\# ".<SID>GetHeaderLine())
-                call append(7, "\# ".<SID>GetVersion())
+                call append(7, <SID>GetVersion())
                 call append(8, "\# ".<SID>GetHeaderLine())
                 call append(9, "")
             elseif b:filetype == 'haskell' ||
@@ -121,7 +122,7 @@ func! TRC_HeadUp(action)
                 call append(4, "\-- ".<SID>GetStart())
                 call append(5, "\-- ".<SID>GetModified())
                 call append(6, "\-- ".<SID>GetHeaderLine())
-                call append(7, "\-- ".<SID>GetVersion())
+                call append(7, <SID>GetVersion())
                 call append(8, "\-- ".<SID>GetHeaderLine())
                 call append(9, "")
             elseif b:filetype == 'markdown' ||
@@ -134,7 +135,7 @@ func! TRC_HeadUp(action)
                 call append(4, "\<!-- ".<SID>GetStart()."")
                 call append(5, "\<!-- ".<SID>GetModified()."")
                 call append(6, "\<!-- ".<SID>GetHeaderLine()."")
-                call append(7, "\<!-- ".<SID>GetVersion()."")
+                call append(7, <SID>GetVersion()."")
                 call append(8, "\<!-- ".<SID>GetHeaderLine()."")
                 call append(9, "-->")
                 call append(10, "")
@@ -146,7 +147,7 @@ func! TRC_HeadUp(action)
                 call append(4, "\" ".<SID>GetStart())
                 call append(5, "\" ".<SID>GetModified())
                 call append(6, "\" ".<SID>GetHeaderLine())
-                call append(7, "\" ".<SID>GetVersion())
+                call append(7, <SID>GetVersion())
                 call append(8, "\" ".<SID>GetHeaderLine())
                 call append(9, "")
             elseif b:filetype == 'arduino' ||
@@ -179,7 +180,7 @@ func! TRC_HeadUp(action)
                 call append(4, "\/** ".<SID>GetStart())
                 call append(5, "\/** ".<SID>GetModified())
                 call append(6, "\/** ".<SID>GetHeaderLine())
-                call append(7, "\/** ".<SID>GetVersion())
+                call append(7, <SID>GetVersion())
                 call append(8, "\/** ".<SID>GetHeaderLine())
                 call append(9, "**/")
                 call append(10, "")
@@ -198,22 +199,9 @@ func! TRC_HeadUp(action)
     endif
 endfunc
 
-func! TRC_VersionUp(action)
-	if (exists("*strftime") == 1)
-        if (a:action == 'update')
-            if &filetype == 'sh'
-                if (search("^* Version\\s*=", 'ep') > 0)
-                    exe "silent normal! ld$\"_\"=strftime(\"%Y.%m.%d\")\<CR>p"
-                endif
-            endif
-        endif
-
-        exe "silent normal! `c"
-    else
-        echo "ERROR: Unable to find strftime() builtin."
-    endif
-endfunc
-
 noremap <silent> <leader>trchp :call TRC_HeadUp('place')<CR>
 noremap <silent> <leader>trchu :call TRC_HeadUp('update')<CR>
-noremap <silent> <leader>trcvp :call TRC_VersionUp('place')<CR>
+
+if exists('g:header_auto_update') && g:header_auto_update == "true"
+    autocmd BufWritePre * silent! :call TRC_HeadUp('update') " Update date when saving buffer
+endif
